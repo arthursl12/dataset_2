@@ -3,6 +3,8 @@ from sklearn.experimental import enable_halving_search_cv
 from sklearn.model_selection import HalvingRandomSearchCV, HalvingGridSearchCV
 from sklearn.model_selection import GridSearchCV
 
+from sklearn.exceptions import ConvergenceWarning
+
 from sklearn.metrics import r2_score
 from warnings import simplefilter
 
