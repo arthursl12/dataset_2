@@ -38,6 +38,16 @@ class DatasetProcessing:
         test_last = test_last.drop(idx_c+set_c, axis=1)
         return test_last
 
+    def transform_test_keep_setting(self,test):
+        # Take only the last line for each test set
+        # Because it is the only annotated line
+        test_last = test.groupby('unit_number').last().reset_index()
+
+        # Dropping unnecessary columns (the index ones)
+        idx_c, _, _, _ = self.column_names()
+        test_last = test_last.drop(idx_c, axis=1)
+        return test_last
+
     # RUL: how many cycles remain ? 
     #   Take the last (maximun) cycle registered ('time' column) for that sample
     #   Subtract from current cycle number
@@ -70,4 +80,18 @@ class DatasetProcessing:
         X_train = train
         idx_c, set_c, _, _ = self.column_names()
         X_train = X_train.drop(idx_c+set_c+['RUL'], axis=1)
+        return X_train, y_train
+
+    def X_y_train_divide_with_settings(self,train_df):
+        # Separate X_train and y_train from train_df
+        # i.e., separate RUL column from train_df
+        # But keep the settings columns
+        if ('RUL' not in train_df.columns):
+            train = self.add_remaining_useful_life_linear(train_df)
+        else:
+            train = train_df
+        y_train = pd.DataFrame(train['RUL'])
+        X_train = train
+        idx_c, _, _, _ = self.column_names()
+        X_train = X_train.drop(idx_c+['RUL'], axis=1)
         return X_train, y_train
