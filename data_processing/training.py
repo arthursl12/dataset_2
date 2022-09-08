@@ -28,10 +28,10 @@ class HyperparameterSearch:
     
     def run_HR_GS(self, base_model, X_train, y_train, param_distributions, 
                   print_best=True, ignore_warnings=False, 
-                  scorer=reclipper_scorer):
+                  scorer=reclipper_scorer, cv=5):
         search = HalvingRandomSearchCV(base_model, param_distributions,
                                        min_resources=500, scoring=scorer, 
-                                       random_state=42, verbose=1)
+                                       random_state=42, verbose=1, cv=cv)
 
         if (ignore_warnings): simplefilter("ignore", category=ConvergenceWarning)
         search.fit(X_train, y_train);
@@ -41,9 +41,10 @@ class HyperparameterSearch:
         return search.best_estimator_
     
     def run_GS(self, base_model, X_train, y_train, param_distributions, 
-               print_best=True, ignore_warnings=False, scorer=reclipper_scorer):
+               print_best=True, ignore_warnings=False, scorer=reclipper_scorer,
+               cv=5):
         search = GridSearchCV(base_model, param_distributions,
-                              scoring=scorer,verbose=1)
+                              scoring=scorer,verbose=1, cv=cv)
 
         if (ignore_warnings): simplefilter("ignore", category=ConvergenceWarning)
         search.fit(X_train, y_train);
