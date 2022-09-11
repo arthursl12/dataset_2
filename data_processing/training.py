@@ -35,11 +35,11 @@ class HyperparameterSearch:
 
         if (ignore_warnings): 
             simplefilter("ignore", category=ConvergenceWarning)
-            simplefilter("ignore", category=ValueError)
+            simplefilter("ignore", category=UserWarning)
         search.fit(X_train, y_train);
         if (ignore_warnings):
             simplefilter("default", category=ConvergenceWarning)
-            simplefilter("default", category=ValueError)
+            simplefilter("default", category=UserWarning)
 
         if(print_best): print("Best params: ", search.best_params_)
         return search.best_estimator_
