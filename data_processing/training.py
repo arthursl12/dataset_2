@@ -33,9 +33,13 @@ class HyperparameterSearch:
                                        min_resources=500, scoring=scorer, 
                                        random_state=42, verbose=1, cv=cv)
 
-        if (ignore_warnings): simplefilter("ignore", category=ConvergenceWarning)
+        if (ignore_warnings): 
+            simplefilter("ignore", category=ConvergenceWarning)
+            simplefilter("ignore", category=ValueError)
         search.fit(X_train, y_train);
-        if (ignore_warnings):simplefilter("default", category=ConvergenceWarning)
+        if (ignore_warnings):
+            simplefilter("default", category=ConvergenceWarning)
+            simplefilter("default", category=ValueError)
 
         if(print_best): print("Best params: ", search.best_params_)
         return search.best_estimator_
