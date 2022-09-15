@@ -27,12 +27,12 @@ class HyperparameterSearch:
         return list_of_dicts
     
     def run_HR_GS(self, base_model, X_train, y_train, param_distributions, 
-                  print_best=True, ignore_warnings=False, 
+                  print_best=True, ignore_warnings=False, factor=3, 
                   scorer=reclipper_scorer, cv=5, min_resources=500):
         search = HalvingRandomSearchCV(base_model, param_distributions,
-                                       min_resources=min_resources, 
+                                       min_resources=min_resources,
                                        scoring=scorer, random_state=42, 
-                                       verbose=1, cv=cv)
+                                       verbose=1, cv=cv, factor=factor)
 
         if (ignore_warnings): 
             simplefilter("ignore", category=ConvergenceWarning)
