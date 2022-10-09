@@ -14,8 +14,8 @@ class DatasetProcessing:
         cols = index_cols + settings_cols + sensors_cols
         return index_cols, settings_cols, sensors_cols, cols
 
-    def read_dataset(self,scenario=1):
-        folder='/content/CMaps/'
+    def read_dataset(self,scenario=1,folder='/content/CMaps/'):
+        folder=folder
         _,_,_,cols = self.column_names()
         train = pd.read_csv(
             (folder+f'train_FD00{scenario}.txt'), 
